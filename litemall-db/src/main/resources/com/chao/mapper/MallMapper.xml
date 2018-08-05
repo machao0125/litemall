@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chao.mapper.MallMapper">
+  <resultMap id="BaseResultMap" type="com.chao.domain.Mall">
+    <id column="id" jdbcType="TINYINT" property="id" />
+    <result column="sn" jdbcType="VARCHAR" property="sn" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="longiAndLatitude" jdbcType="VARCHAR" property="longiandlatitude" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="logo" jdbcType="VARCHAR" property="logo" />
+    <result column="officeTime" jdbcType="VARCHAR" property="officetime" />
+    <result column="openingTime" jdbcType="DATE" property="openingtime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Byte">
+    delete from `mall`
+    where id = #{id,jdbcType=TINYINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.chao.domain.Mall" useGeneratedKeys="true">
+    insert into `mall` (sn, name, state, 
+      longiAndLatitude, address, describe, 
+      picture, logo, officeTime, 
+      openingTime, remark)
+    values (#{sn,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}, 
+      #{longiandlatitude,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, 
+      #{picture,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR}, #{officetime,jdbcType=VARCHAR}, 
+      #{openingtime,jdbcType=DATE}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.chao.domain.Mall">
+    update `mall`
+    set sn = #{sn,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      state = #{state,jdbcType=TINYINT},
+      longiAndLatitude = #{longiandlatitude,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      describe = #{describe,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      officeTime = #{officetime,jdbcType=VARCHAR},
+      openingTime = #{openingtime,jdbcType=DATE},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=TINYINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Byte" resultMap="BaseResultMap">
+    select id, sn, name, state, longiAndLatitude, address, describe, picture, logo, officeTime, 
+    openingTime, remark
+    from `mall`
+    where id = #{id,jdbcType=TINYINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, sn, name, state, longiAndLatitude, address, describe, picture, logo, officeTime, 
+    openingTime, remark
+    from `mall`
+  </select>
+</mapper>

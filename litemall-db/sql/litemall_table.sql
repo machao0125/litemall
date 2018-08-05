@@ -151,7 +151,7 @@ CREATE TABLE `litemall_category` (
   KEY `parent_id` (`pid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1036005 DEFAULT CHARSET=utf8mb4 COMMENT='类目表';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+http://47.104.143.110:8082/wx/auth/login_by_weixin
 --
 -- Table structure for table `litemall_collect`
 --
