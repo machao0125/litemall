@@ -1,13 +1,14 @@
-package com.chao.service.impl;
+package org.linlinjava.litemall.db.chao.service.impl;
 
-import com.chao.domain.Mall;
-import com.chao.mapper.MallMapper;
-import com.chao.service.IMallService;
-import com.chao.utils.LongiAndLatiUtil;
+
+
+import org.linlinjava.litemall.db.chao.domain.Mall;
+import org.linlinjava.litemall.db.dao.MallMapper;
+import org.linlinjava.litemall.db.chao.service.IMallService;
+import org.linlinjava.litemall.db.chao.utils.LongiAndLatiUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.naming.MalformedLinkException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -16,12 +17,12 @@ import java.util.List;
  * Created by machao on 2018/8/5.
  */
 @Service
-public class MallServiceServiceImpl implements IMallService {
+public class MallServiceImpl implements IMallService {
 
     @Autowired
     private MallMapper mallMapper;
 
-    public List<Mall> mallListNearby(String longiandlatitude,int num){
+    public List<Mall> mallListNearby(String longiandlatitude, int num){
         //1、获取所有商铺列表
         List<Mall> malls = mallMapper.selectAll();
         //2、计算所有商铺到用户的距离，并保存进店铺对象

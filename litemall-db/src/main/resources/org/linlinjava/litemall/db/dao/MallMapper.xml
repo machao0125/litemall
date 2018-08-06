@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.chao.mapper.MallMapper">
-  <resultMap id="BaseResultMap" type="com.chao.domain.Mall">
+<mapper namespace="org.linlinjava.litemall.db.dao.MallMapper">
+  <resultMap id="BaseResultMap" type="org.linlinjava.litemall.db.chao.domain.Mall">
     <id column="id" jdbcType="TINYINT" property="id" />
     <result column="sn" jdbcType="VARCHAR" property="sn" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -19,7 +19,7 @@
     delete from `mall`
     where id = #{id,jdbcType=TINYINT}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.chao.domain.Mall" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.linlinjava.litemall.db.chao.domain.Mall" useGeneratedKeys="true">
     insert into `mall` (sn, name, state, 
       longiAndLatitude, address, describe, 
       picture, logo, officeTime, 
@@ -29,7 +29,7 @@
       #{picture,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR}, #{officetime,jdbcType=VARCHAR}, 
       #{openingtime,jdbcType=DATE}, #{remark,jdbcType=VARCHAR})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.chao.domain.Mall">
+  <update id="updateByPrimaryKey" parameterType="org.linlinjava.litemall.db.chao.domain.Mall">
     update `mall`
     set sn = #{sn,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},

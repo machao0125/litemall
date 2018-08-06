@@ -1,15 +1,15 @@
-package com.chao.domain;
+package org.linlinjava.litemall.db.chao.domain;
 
 import java.util.Date;
 
 public class Mall {
-    private Byte id;
+    private int id;
 
     private String sn;
 
     private String name;
 
-    private Byte state;
+    private int state;
 
     private String longiandlatitude;
 
@@ -37,11 +37,11 @@ public class Mall {
         this.distance = distance;
     }
 
-    public Byte getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Byte id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -61,11 +61,11 @@ public class Mall {
         this.name = name;
     }
 
-    public Byte getState() {
+    public int getState() {
         return state;
     }
 
-    public void setState(Byte state) {
+    public void setState(int state) {
         this.state = state;
     }
 

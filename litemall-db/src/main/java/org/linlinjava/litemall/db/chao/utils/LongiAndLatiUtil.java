@@ -1,4 +1,4 @@
-package com.chao.utils;
+package org.linlinjava.litemall.db.chao.utils;
 
 /**
  * Created by machao on 2018/8/5.

@@ -1,11 +1,12 @@
-package com.chao.mapper;
+package org.linlinjava.litemall.db.dao;
 
-import com.chao.domain.Mall;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.linlinjava.litemall.db.chao.domain.Mall;
 
 import java.util.List;
 
-@Mapper
+
 public interface MallMapper {
     int deleteByPrimaryKey(Byte id);
 
