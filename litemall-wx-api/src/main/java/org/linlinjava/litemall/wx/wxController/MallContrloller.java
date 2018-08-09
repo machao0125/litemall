@@ -8,6 +8,7 @@ import org.linlinjava.litemall.wx.annotation.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -23,17 +24,26 @@ public class MallContrloller {
     private IMallService mallService;
 
     @PostMapping("mallListNearBy")
-    public Object mallListNearBy(@LoginUser Integer userId, String longiandlatitude, int num){
+    public Object mallListNearBy(@LoginUser Integer userId, String longiandlatitude,@RequestParam(value = "num", defaultValue = "1") int num){
         //1、判断入参不为空
         if(longiandlatitude == null){
             return ResponseUtil.badArgument();
         }
-        //2、设置默认返回店铺数量为1
-        if (num == 0 )
-            num = 1;
-        //3、调用service方法获取店铺列表
+        //2、调用service方法获取店铺列表
         List<Mall> malls = mallService.mallListNearby(longiandlatitude, num);
 
         return ResponseUtil.ok(malls);
+    }
+
+    @PostMapping("mallListByUserId")
+    public Object mallListByUserId(@LoginUser Integer userId) {
+        //1、判断入参不为空
+        if (userId == null) {
+            return ResponseUtil.badArgument();
+        }
+        //2、调用service方法获取店铺列表
+        Mall mall = mallService.mallListByUserId(userId);
+
+        return ResponseUtil.ok(mall);
     }
 }

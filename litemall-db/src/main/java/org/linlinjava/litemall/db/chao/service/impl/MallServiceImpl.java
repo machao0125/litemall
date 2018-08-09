@@ -6,6 +6,8 @@ import org.linlinjava.litemall.db.chao.domain.Mall;
 import org.linlinjava.litemall.db.dao.MallMapper;
 import org.linlinjava.litemall.db.chao.service.IMallService;
 import org.linlinjava.litemall.db.chao.utils.LongiAndLatiUtil;
+import org.linlinjava.litemall.db.domain.LitemallUser;
+import org.linlinjava.litemall.db.service.LitemallUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,16 @@ public class MallServiceImpl implements IMallService {
 
     @Autowired
     private MallMapper mallMapper;
+    @Autowired
+    private LitemallUserService litemallUserService;
 
+    /**
+     * 根据经纬度获取附近店铺信息
+     *
+     * @param longiandlatitude 经纬度
+     * @param num 返回店铺数量
+     * @return
+     */
     public List<Mall> mallListNearby(String longiandlatitude, int num){
         //1、获取所有商铺列表
         List<Mall> malls = mallMapper.selectAll();
@@ -47,5 +58,19 @@ public class MallServiceImpl implements IMallService {
         });
         //4、返回指定的店铺列表的数目
         return malls.subList(0,num);
+    }
+
+    /**
+     * 根据userid获取店员对应店铺信息
+     *
+     * @param userId 店员id
+     * @return
+     */
+    @Override
+    public Mall mallListByUserId(int userId) {
+        //1、根据userid查询对应店员信息
+        LitemallUser litemallUser = litemallUserService.findById(userId);
+        //2、根据mall_id查询商铺信息
+        return mallMapper.selectByPrimaryKey(litemallUser.getMallId());
     }
 }

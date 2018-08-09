@@ -15,7 +15,7 @@ public class Mall {
 
     private String address;
 
-    private String describe;
+    private String desc;
 
     private String picture;
 
@@ -85,12 +85,12 @@ public class Mall {
         this.address = address;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public String getPicture() {
