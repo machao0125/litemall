@@ -28,7 +28,7 @@ public class MallContrloller {
     private IMallService mallService;
 
     @PostMapping("mallListNearBy")
-    public Object mallListNearBy(@LoginUser Integer userId, String longiandlatitude,@RequestParam(value = "num", defaultValue = "1") int num){
+    public Object mallListNearBy( Integer userId, String longiandlatitude,@RequestParam(value = "num", defaultValue = "1") int num){
         //1、判断入参不为空
         if(longiandlatitude == null){
             return ResponseUtil.badArgument();

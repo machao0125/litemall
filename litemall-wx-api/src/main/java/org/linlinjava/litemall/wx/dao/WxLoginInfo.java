@@ -3,11 +3,11 @@ package org.linlinjava.litemall.wx.dao;
 public class WxLoginInfo {
     private String code;
     private UserInfo userInfo;
-    private String signature;
-    private String encrypteData;
-    private String iv;
+    //private String signature;
+    //private String encrypteData;
+    //private String iv;
 
-    public String getSignature() {
+    /*public String getSignature() {
         return signature;
     }
 
@@ -29,7 +29,7 @@ public class WxLoginInfo {
 
     public void setIv(String iv) {
         this.iv = iv;
-    }
+    }*/
 
     public String getCode() {
         return code;

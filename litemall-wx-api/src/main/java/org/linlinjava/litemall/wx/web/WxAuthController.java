@@ -129,13 +129,13 @@ public class WxAuthController {
     @RequestMapping("login_by_weixin")
     public Object loginByWeixin(@RequestBody WxLoginInfo wxLoginInfo, HttpServletRequest request) {
 
-        WxMaJscode2SessionResult session = null;
+        WxMaJscode2SessionResult session ;
         String openId = null;
         String sessionKey = null;
         String phoneNumber = null;
 
-        String iv = wxLoginInfo.getIv();
-        String encrypteData = wxLoginInfo.getEncrypteData();
+        //String iv = wxLoginInfo.getIv();
+        //String encrypteData = wxLoginInfo.getEncrypteData();
         String code = wxLoginInfo.getCode();
         UserInfo userInfo = wxLoginInfo.getUserInfo();
         if(code == null || userInfo == null){
@@ -149,7 +149,7 @@ public class WxAuthController {
             openId = session.getOpenid();
 
             //2、获取用户手机号
-            phoneNumber = WxMiniappUtils.phone(code,encrypteData,iv);
+            //phoneNumber = WxMiniappUtils.phone(code,encrypteData,iv);
         } catch (WxErrorException e) {
             e.printStackTrace();
         }
@@ -179,6 +179,8 @@ public class WxAuthController {
         else{
             user.setLastLoginTime(LocalDateTime.now());
             user.setLastLoginIp(IpUtil.client(request));
+            user.setNickname(userInfo.getNickName());
+            user.setAvatar(userInfo.getAvatarUrl());
             userService.update(user);
         }
 
@@ -188,7 +190,7 @@ public class WxAuthController {
         Map<Object, Object> result = new HashMap<Object, Object>();
         result.put("token", userToken.getToken());
         result.put("tokenExpire", userToken.getExpireTime().toString());
-        //result.put("userInfo", userInfo);
+        result.put("openId", openId);
         return ResponseUtil.ok(result);
     }
 
