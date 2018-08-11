@@ -2,7 +2,7 @@ package org.linlinjava.litemall.db.service;
 
 import com.github.pagehelper.PageHelper;
 import org.linlinjava.litemall.db.dao.LitemallOrderMapper;
-import org.linlinjava.litemall.db.domain.LitemallOrder;
+import org.linlinjava.litemall.db.chao.domain.LitemallOrder;
 import org.linlinjava.litemall.db.domain.LitemallOrderExample;
 import org.linlinjava.litemall.db.util.OrderUtil;
 import org.springframework.stereotype.Service;
@@ -75,7 +75,7 @@ public class LitemallOrderService {
 
     public List<LitemallOrder> queryByOrderStatus(Integer userId, List<Short> orderStatus) {
         LitemallOrderExample example = new LitemallOrderExample();
-        example.setOrderByClause(LitemallOrder.Column.addTime.desc());
+       // example.setOrderByClause(LitemallOrder.Column.addTime.desc());
         LitemallOrderExample.Criteria criteria = example.or();
         criteria.andUserIdEqualTo(userId);
         if(orderStatus != null) {

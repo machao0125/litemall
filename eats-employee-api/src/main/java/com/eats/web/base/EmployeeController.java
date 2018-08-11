@@ -25,7 +25,7 @@ public class EmployeeController {
     private IEmployeeService employeeService;
 
     @ApiOperation(value = "获取员工信息")
-    @ApiImplicitParam(name = "empId", value = "员工id",paramType = "query", required = true, dataType = "int")
+    @ApiImplicitParam(name = "empId", value = "员工id", required = true, dataType = "int")
     @PostMapping("getEmployee")
     public Object getEmployee(Integer empId) {
         //1、判断入参不为空
