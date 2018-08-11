@@ -7,6 +7,20 @@ public class UserInfo {
     private String province;
     private String city;
     private String language;
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "nickName='" + nickName + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", country='" + country + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", language='" + language + '\'' +
+                ", gender=" + gender +
+                '}';
+    }
+
     private Byte gender;
 
     public void setCountry(String country) {

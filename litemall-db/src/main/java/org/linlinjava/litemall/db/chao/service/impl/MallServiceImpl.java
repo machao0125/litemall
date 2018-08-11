@@ -2,12 +2,12 @@ package org.linlinjava.litemall.db.chao.service.impl;
 
 
 
+import org.linlinjava.litemall.db.chao.domain.Employee;
 import org.linlinjava.litemall.db.chao.domain.Mall;
+import org.linlinjava.litemall.db.chao.service.IEmployeeService;
 import org.linlinjava.litemall.db.dao.MallMapper;
 import org.linlinjava.litemall.db.chao.service.IMallService;
 import org.linlinjava.litemall.db.chao.utils.LongiAndLatiUtil;
-import org.linlinjava.litemall.db.domain.LitemallUser;
-import org.linlinjava.litemall.db.service.LitemallUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class MallServiceImpl implements IMallService {
     @Autowired
     private MallMapper mallMapper;
     @Autowired
-    private LitemallUserService litemallUserService;
+    private IEmployeeService employeeService;
 
     /**
      * 根据经纬度获取附近店铺信息
@@ -63,14 +63,14 @@ public class MallServiceImpl implements IMallService {
     /**
      * 根据userid获取店员对应店铺信息
      *
-     * @param userId 店员id
+     * @param empId 店员id
      * @return
      */
     @Override
-    public Mall mallListByUserId(int userId) {
-        //1、根据userid查询对应店员信息
-        LitemallUser litemallUser = litemallUserService.findById(userId);
+    public Mall mallListByUserId(int empId) {
+        //1、根据empId查询对应店员信息
+        Employee employee = employeeService.getOne(empId);
         //2、根据mall_id查询商铺信息
-        return mallMapper.selectByPrimaryKey(litemallUser.getMallId());
+        return mallMapper.selectByPrimaryKey(employee.getMallId());
     }
 }

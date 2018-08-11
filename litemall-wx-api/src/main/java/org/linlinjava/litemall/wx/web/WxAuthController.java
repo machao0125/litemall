@@ -128,7 +128,7 @@ public class WxAuthController {
      */
     @RequestMapping("login_by_weixin")
     public Object loginByWeixin(@RequestBody WxLoginInfo wxLoginInfo, HttpServletRequest request) {
-
+        logger.info("进入微信登录接口时间： " + System.currentTimeMillis());
         WxMaJscode2SessionResult session ;
         String openId = null;
         String sessionKey = null;
@@ -138,15 +138,19 @@ public class WxAuthController {
         //String encrypteData = wxLoginInfo.getEncrypteData();
         String code = wxLoginInfo.getCode();
         UserInfo userInfo = wxLoginInfo.getUserInfo();
+        logger.info("获取入参时间： " + System.currentTimeMillis() +
+                    ", code: " + code + ", userinfo" + userInfo );
         if(code == null || userInfo == null){
             return ResponseUtil.badArgument();
         }
 
 
         try {
+            logger.info("调用微信接口开始时间： " + System.currentTimeMillis());
             session = this.wxService.getUserService().getSessionInfo(code);
             sessionKey = session.getSessionKey();
             openId = session.getOpenid();
+            logger.info("调用微信接口结束时间： " + System.currentTimeMillis());
 
             //2、获取用户手机号
             //phoneNumber = WxMiniappUtils.phone(code,encrypteData,iv);
@@ -158,8 +162,11 @@ public class WxAuthController {
             return ResponseUtil.fail();
         }
 
+        logger.info("根据openId查询数据库： " + System.currentTimeMillis());
         LitemallUser user = userService.queryByOid(openId);
+        logger.info("根据openId查询数据库： " + System.currentTimeMillis());
         if(user == null){
+            logger.info("保存用户信息到数据库： " + System.currentTimeMillis());
             user = new LitemallUser();
             user.setUsername(userInfo.getNickName());  // 其实没有用，因为用户没有真正注册
             user.setPassword(openId);                  // 其实没有用，因为用户没有真正注册
@@ -175,22 +182,28 @@ public class WxAuthController {
             user.setMobile(phoneNumber);
 
             userService.add(user);
+            logger.info("保存用户信息到数据库： " + System.currentTimeMillis());
         }
         else{
+            logger.info("更新用户信息到数据库： " + System.currentTimeMillis());
             user.setLastLoginTime(LocalDateTime.now());
             user.setLastLoginIp(IpUtil.client(request));
             user.setNickname(userInfo.getNickName());
             user.setAvatar(userInfo.getAvatarUrl());
             userService.update(user);
+            logger.info("更新用户信息到数据库： " + System.currentTimeMillis());
         }
 
+        logger.info("生成token时间： " + System.currentTimeMillis());
         // token
         UserToken userToken = UserTokenManager.generateToken(user.getId());
+        logger.info("生成token时间： " + System.currentTimeMillis());
 
         Map<Object, Object> result = new HashMap<Object, Object>();
         result.put("token", userToken.getToken());
         result.put("tokenExpire", userToken.getExpireTime().toString());
         result.put("openId", openId);
+        logger.info("返回报文时间： " + System.currentTimeMillis());
         return ResponseUtil.ok(result);
     }
 

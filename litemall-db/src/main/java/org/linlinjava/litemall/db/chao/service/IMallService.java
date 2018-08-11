@@ -13,5 +13,5 @@ public interface IMallService {
 
     List<Mall> mallListNearby(String longiandlatitude, int num);
 
-    Mall mallListByUserId(int userId);
+    Mall mallListByUserId(int empId);
 }

@@ -24,7 +24,8 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .enable(enableSwagger)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("org.linlinjava.litemall"))
+                //.apis(RequestHandlerSelectors.basePackage("org.linlinjava.litemall"))
+                .apis(RequestHandlerSelectors.basePackage("com.eats.web"))
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -32,12 +33,12 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("litemall")
-                .description("又一个小商城。litemall = Spring Boot后端 + Vue管理员前端 + 微信小程序用户前端")
-                .termsOfServiceUrl("https://github.com/linlinjava/litemall")
+                .description("吃或空间，域名：www.eats.wiki")
+                //.termsOfServiceUrl("https://github.com/linlinjava/litemall")
                 .version("0.1.0")
-                .license("MIT")
-                .licenseUrl("https://github.com/linlinjava/litemall/blob/master/LICENSE")
-                .contact(new Contact("linlinjava", "https://github.com/linlinjava", "linlinjava@163.com"))
+                //.license("MIT")
+                //.licenseUrl("https://github.com/linlinjava/litemall/blob/master/LICENSE")
+                //.contact(new Contact("linlinjava", "https://github.com/linlinjava", "linlinjava@163.com"))
                 .build();
     }
 }

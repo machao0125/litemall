@@ -26,6 +26,7 @@
         <module>litemall-wx-api</module>
         <module>litemall-admin-api</module>
         <module>litemall-all</module>
+        <module>eats-employee-api</module>
     </modules>
 
     <dependencyManagement>
