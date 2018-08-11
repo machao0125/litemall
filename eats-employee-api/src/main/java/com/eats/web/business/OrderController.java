@@ -3,6 +3,7 @@ package com.eats.web.business;
 import com.eats.annotation.LoginUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -40,14 +41,7 @@ public class OrderController {
     @Autowired
     private IMallService mallService;
 
- /*    @ApiOperation(value="获取订单信息")
-    @ApiImplicitParam(name = "orderId",value = "订单id" ,paramType = "query" , required = true, dataType = "int")
-   @PostMapping("mallListByEmpId")
-    public Object getOrder(String orderId,
-            @RequestParam(value = "page", defaultValue = "1") Integer page,
-            @RequestParam(value = "size", defaultValue = "10") Integer size){
-        return ResponseUtil.ok();
-    }*/
+
     /**
      * 订单列表
      *
@@ -65,7 +59,7 @@ public class OrderController {
      * }
      * 失败则 { errno: XXX, errmsg: XXX }
      */
-    @ApiOperation(value="获取订单信息")
+    @ApiOperation(value="获取订单列表")
     @ApiImplicitParam(name = "vo",value = "查询订单vo" , required = true, dataType = "QueryOrderVO")
     @PostMapping("list")
     public Object list(@RequestBody QueryOrderVO vo) {
@@ -80,7 +74,7 @@ public class OrderController {
     /**
      * 订单详情
      *
-     * @param userId  用户ID
+     * @param empId  用户ID
      * @param orderId 订单信息
      * @return 订单操作结果
      * 成功则
@@ -95,9 +89,14 @@ public class OrderController {
      * }
      * 失败则 { errno: XXX, errmsg: XXX }
      */
-   /* @GetMapping("detail")
-    public Object detail(@LoginUser Integer userId, Integer orderId) {
-        if (userId == null) {
+    @ApiOperation(value="获取订单信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "empId", paramType = "query", value = "查询订单vo", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "orderId", paramType = "query", value = "查询订单vo", required = true, dataType = "int")
+    })
+    @PostMapping("detail")
+    public Object detail( Integer empId, Integer orderId) {
+        if (empId == null) {
             return ResponseUtil.unlogin();
         }
         if (orderId == null) {
@@ -105,11 +104,11 @@ public class OrderController {
         }
 
         // 订单信息
-        LitemallOrder order = orderService.findById(orderId);
+        LitemallOrder order = orderService.getOne(orderId);
         if (null == order) {
             return ResponseUtil.fail(403, "订单不存在");
         }
-        if (!order.getUserId().equals(userId)) {
+        if (!order.getEmpId().equals(empId)) {
             return ResponseUtil.fail(403, "不是当前用户的订单");
         }
         Map<String, Object> orderVo = new HashMap<String, Object>();
@@ -146,5 +145,5 @@ public class OrderController {
         return ResponseUtil.ok(result);
 
     }
-*/
+
 }

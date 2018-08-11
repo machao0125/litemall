@@ -1,6 +1,6 @@
 package org.linlinjava.litemall.db.util;
 
-import org.linlinjava.litemall.db.domain.LitemallOrder;
+import org.linlinjava.litemall.db.chao.domain.LitemallOrder;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
