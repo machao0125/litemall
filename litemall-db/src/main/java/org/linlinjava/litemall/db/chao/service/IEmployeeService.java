@@ -19,5 +19,7 @@ public interface IEmployeeService {
 
     Employee selectByMobile(String mobile);
 
+    int updateEmployee(Employee employee);
+
 
 }

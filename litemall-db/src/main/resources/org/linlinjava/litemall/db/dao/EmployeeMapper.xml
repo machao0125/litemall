@@ -21,10 +21,16 @@
     <result column="integration" jdbcType="INTEGER" property="integration" />
     <result column="mall_id" jdbcType="INTEGER" property="mallId" />
   </resultMap>
+
+  <sql id="baseColumn">
+    id,account,email,name,mobile,createTime,enable,lastPasswordResetDate
+  </sql>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from `employee`
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.linlinjava.litemall.db.chao.domain.Employee" useGeneratedKeys="true">
     insert into `employee` (username, password, gender, 
       birthday, last_login_time, last_login_ip, 
@@ -39,10 +45,10 @@
       #{addTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{returnMoney,jdbcType=DECIMAL}, 
       #{integration,jdbcType=INTEGER}, #{mallId,jdbcType=INTEGER})
   </insert>
+
   <update id="updateByPrimaryKey" parameterType="org.linlinjava.litemall.db.chao.domain.Employee">
     update `employee`
     set username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=TINYINT},
       birthday = #{birthday,jdbcType=DATE},
       last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
@@ -60,13 +66,13 @@
       mall_id = #{mallId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, username, password, gender, birthday, last_login_time, last_login_ip, 
-    user_level, nickname, mobile, avatar, weixin_openid, status, add_time, deleted, return_money, 
-    integration, mall_id
+    select <include refid="baseColumn"/>
     from `employee`
     where id = #{id,jdbcType=INTEGER}
   </select>
+
   <select id="selectAll" resultMap="BaseResultMap">
     select id, username, password, gender, birthday, last_login_time, last_login_ip, 
     user_level, nickname, mobile, avatar, weixin_openid, status, add_time, deleted, return_money, 
@@ -75,20 +81,22 @@
   </select>
 
   <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String">
-    select id, username, password, gender, birthday, last_login_time, last_login_ip,
-    user_level, nickname, mobile, avatar, weixin_openid, status, add_time, deleted, return_money,
-    integration, mall_id
+    select <include refid="baseColumn"/>
     from `employee`
     WHERE username = #{username}
   </select>
 
   <select id="selectByMobile" resultMap="BaseResultMap" parameterType="java.lang.String">
-    select id, username, password, gender, birthday, last_login_time, last_login_ip,
-    user_level, nickname, mobile, avatar, weixin_openid, status, add_time, deleted, return_money,
-    integration, mall_id
+    select <include refid="baseColumn"/>
     from `employee`
     WHERE username = #{username}
   </select>
+
+  <update id="updatePasswordByMobile" parameterType="java.lang.String">
+    update `employee`
+    set password = #{password,jdbcType=VARCHAR}
+    where mobile = #{mobile,jdbcType=VARCHAR}
+  </update>
 
 
 </mapper>

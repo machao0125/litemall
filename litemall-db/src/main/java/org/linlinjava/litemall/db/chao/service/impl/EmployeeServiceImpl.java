@@ -41,7 +41,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
      * 保存员工信息
      *
      * @param record  员工实体对象
-     * @return
+     * @return boolean
      */
     @Override
     public boolean register(Employee record) {
@@ -67,7 +67,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
      *
      * @param mobile 员工电话号
      * @param password 员工登录密码
-     * @return
+     * @return int
      */
     @Override
     public int updatePassword(String mobile,String password) {
@@ -77,18 +77,47 @@ public class EmployeeServiceImpl implements IEmployeeService {
         return employeeMapper.updatePasswordByMobile(mobile, encodedPassword);
     }
 
+    /**
+     * 根据id查询员工信息
+     *
+     * @param id 员工id
+     * @return Employee
+     */
     @Override
     public Employee getOne(Integer id) {
         return employeeMapper.selectByPrimaryKey(id);
     }
 
+    /**
+     * 根据账户查询员工信息
+     *
+     * @param username 员工账号
+     * @return Employee
+     */
     @Override
     public Employee selectByUsername(String username) {
         return employeeMapper.selectByUsername(username);
     }
 
+    /**
+     * 根据手机号查询员工信息
+     *
+     * @param mobile 员工手机号
+     * @return Employee
+     */
     @Override
     public Employee selectByMobile(String mobile) {
         return employeeMapper.selectByMobile(mobile);
+    }
+
+    /**
+     * 更新员工信息
+     *
+     * @param employee 员工实体
+     * @return int
+     */
+    @Override
+    public int updateEmployee(Employee employee) {
+        return employeeMapper.updateByPrimaryKey(employee);
     }
 }

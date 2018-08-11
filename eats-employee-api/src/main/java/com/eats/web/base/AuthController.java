@@ -24,7 +24,7 @@ import java.util.Map;
 
 @Api(description = "员工登录相关API")
 @RestController
-@RequestMapping("/employee/employee")
+@RequestMapping("/auth")
 public class AuthController {
     private final Log logger = LogFactory.getLog(AuthController.class);
 

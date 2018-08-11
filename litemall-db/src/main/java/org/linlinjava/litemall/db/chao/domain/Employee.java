@@ -1,43 +1,68 @@
 package org.linlinjava.litemall.db.chao.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
+@ApiModel(value = "User", description = "用户")
 public class Employee {
-
+    @ApiModelProperty(value = "主键")
     private Integer id;
 
+    @ApiModelProperty(value = "账号")
     private String username;
 
+    @ApiModelProperty(value = "密码")
     private String password;
 
+    @ApiModelProperty(value = "性别")
     private int gender;
 
+    @ApiModelProperty(value = "生日")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date birthday;
 
+    @ApiModelProperty(value = "最后登录时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastLoginTime;
 
+    @ApiModelProperty(value = "最后登录ip")
     private String lastLoginIp;
 
+    @ApiModelProperty(value = "级别")
     private int userLevel;
 
+    @ApiModelProperty(value = "昵称")
     private String nickname;
 
+    @ApiModelProperty(value = "手机号")
     private String mobile;
 
+    @ApiModelProperty(value = "头像")
     private String avatar;
 
+    @ApiModelProperty(value = "微信openid")
     private String weixinOpenid;
 
+    @ApiModelProperty(value = "状态")
     private int status;
 
+    @ApiModelProperty(value = "账号创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
+    @ApiModelProperty(value = "逻辑删除")
     private Boolean deleted;
 
+    @ApiModelProperty(value = "账户金额")
     private Long returnMoney;
 
+    @ApiModelProperty(value = "账号积分")
     private Integer integration;
 
+    @ApiModelProperty(value = "店铺id")
     private Integer mallId;
 
     public Integer getId() {

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(description = "店铺相关API")
 @RestController
-@RequestMapping("/employee/malls")
+@RequestMapping("/malls")
 public class MallController {
     private final Log logger = LogFactory.getLog(MallController.class);
 
