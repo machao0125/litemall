@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
-@ApiModel(value = "User", description = "用户")
+@ApiModel(value = "Employee", description = "员工")
 public class Employee {
     @ApiModelProperty(value = "主键")
     private Integer id;

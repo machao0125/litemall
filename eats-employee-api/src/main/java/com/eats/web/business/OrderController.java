@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.core.util.ResponseUtil;
 import org.linlinjava.litemall.db.chao.service.IMallService;
 import org.linlinjava.litemall.db.chao.service.IOrderService;
+import org.linlinjava.litemall.db.chao.utils.DateUtil;
 import org.linlinjava.litemall.db.chao.utils.PageBean;
 import org.linlinjava.litemall.db.chao.vo.QueryOrderVO;
 import org.linlinjava.litemall.db.chao.domain.LitemallOrder;
@@ -38,38 +39,39 @@ public class OrderController {
     private IOrderService orderService;
     @Autowired
     private LitemallOrderGoodsService orderGoodsService;
-    @Autowired
-    private IMallService mallService;
 
 
-    /**
-     * 订单列表
-     *
-     * @param vo     QueryOrderVO
-     * @return 订单操作结果
-     * 成功则
-     * {
-     * errno: 0,
-     * errmsg: '成功',
-     * data:
-     * {
-     * data: xxx ,
-     * count: xxx
-     * }
-     * }
-     * 失败则 { errno: XXX, errmsg: XXX }
-     */
     @ApiOperation(value="获取订单列表")
-    @ApiImplicitParam(name = "vo",value = "查询订单vo" , required = true, dataType = "QueryOrderVO")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "empId",value = "员工id" , paramType = "query",required = true, dataType = "String"),
+        @ApiImplicitParam(name = "status",value = "订单状态" ,  paramType = "query",required = true, dataType = "String"),
+        @ApiImplicitParam(name = "orderDate",value = "订单创建时间" , paramType = "query", required = true, dataType = "String"),
+        @ApiImplicitParam(name = "currentPage",value = "当前页" , paramType = "query",required = true, dataType = "String"),
+        @ApiImplicitParam(name = "pageSize",value = "页面容量" , paramType = "query", required = true, dataType = "String")
+    })
     @PostMapping("list")
-    public Object list(@RequestBody QueryOrderVO vo) {
-        /*if (userId == null) {
+    public Object list( int empId,int status,String orderDate,
+                        @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
+                        @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+        if (empId == 0) {
             return ResponseUtil.unlogin();
-        }*/
+        }
+
+        QueryOrderVO vo = new QueryOrderVO();
+        vo.setEmpId(empId);
+        vo.setCurrentPage(currentPage);
+        vo.setPageSize(pageSize);
+        vo.setStatus(status);
+        vo.setBeginDate(DateUtil.getBeginDayTime(DateUtil.StringToDate(orderDate)));
+        vo.setEndDate(DateUtil.getEndDayTime(DateUtil.StringToDate(orderDate)));
         PageBean<LitemallOrder> bean = orderService.findItemByPageAndVO(vo);
 
         return ResponseUtil.ok(bean);
     }
+
+
+    @Autowired
+    private IMallService mallService;
 
     /**
      * 订单详情
@@ -91,8 +93,8 @@ public class OrderController {
      */
     @ApiOperation(value="获取订单信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "empId", paramType = "query", value = "查询订单vo", required = true, dataType = "int"),
-            @ApiImplicitParam(name = "orderId", paramType = "query", value = "查询订单vo", required = true, dataType = "int")
+            @ApiImplicitParam(name = "empId", paramType = "query", value = "员工id", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "orderId", paramType = "query", value = "订单id", required = true, dataType = "int")
     })
     @PostMapping("detail")
     public Object detail( Integer empId, Integer orderId) {

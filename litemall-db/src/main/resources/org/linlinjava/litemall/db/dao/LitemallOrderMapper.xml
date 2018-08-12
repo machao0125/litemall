@@ -14,6 +14,7 @@
     <result column="coupon_price" jdbcType="DECIMAL" property="couponPrice" />
     <result column="integral_price" jdbcType="DECIMAL" property="integralPrice" />
     <result column="order_price" jdbcType="DECIMAL" property="orderPrice" />
+    <result column="actual_num" jdbcType="DECIMAL" property="actualNum" />
     <result column="actual_price" jdbcType="DECIMAL" property="actualPrice" />
     <result column="pay_id" jdbcType="VARCHAR" property="payId" />
     <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
@@ -600,7 +601,7 @@
       <if test="mallId > 0">
         AND mall_id = #{mallId}
       </if>
-      <if test="status > -1">
+      <if test="status > 100">
         AND order_status = #{status}
       </if>
       <if test="beginDate!=null">
@@ -613,7 +614,7 @@
   </sql>
 
   <sql id="baseColumn">
-    id, user_id, order_sn, order_status, consignee, mobile, address, goods_price,
+    id, user_id, order_sn, order_status, consignee, mobile, address, goods_price,actual_num,
     freight_price, coupon_price, integral_price, order_price, actual_price, pay_id, pay_time,
     ship_sn, ship_channel, ship_time, confirm_time, end_time, add_time, emp_id, deleted,
     mall_id, return_money
@@ -641,7 +642,7 @@
     consignee, mobile, address,
     goods_price, freight_price, coupon_price,
     integral_price, order_price, actual_price,
-    pay_id, pay_time, ship_sn,
+    pay_id, pay_time, ship_sn,actual_num,
     ship_channel, ship_time, confirm_time,
     end_time, add_time, emp_id,
     deleted, mall_id, return_money
@@ -650,7 +651,7 @@
     #{consignee,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
     #{goodsPrice,jdbcType=DECIMAL}, #{freightPrice,jdbcType=DECIMAL}, #{couponPrice,jdbcType=DECIMAL},
     #{integralPrice,jdbcType=DECIMAL}, #{orderPrice,jdbcType=DECIMAL}, #{actualPrice,jdbcType=DECIMAL},
-    #{payId,jdbcType=VARCHAR}, #{payTime,jdbcType=TIMESTAMP}, #{shipSn,jdbcType=VARCHAR},
+    #{payId,jdbcType=VARCHAR}, #{payTime,jdbcType=TIMESTAMP}, #{shipSn,jdbcType=VARCHAR},#{actualNum},
     #{shipChannel,jdbcType=VARCHAR}, #{shipTime,jdbcType=TIMESTAMP}, #{confirmTime,jdbcType=TIMESTAMP},
     #{endTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP}, #{empId,jdbcType=INTEGER},
     #{deleted,jdbcType=BIT}, #{mallId,jdbcType=INTEGER}, #{returnMoney,jdbcType=DECIMAL}
@@ -671,6 +672,7 @@
     integral_price = #{integralPrice,jdbcType=DECIMAL},
     order_price = #{orderPrice,jdbcType=DECIMAL},
     actual_price = #{actualPrice,jdbcType=DECIMAL},
+    actual_num = #{actualNum},
     pay_id = #{payId,jdbcType=VARCHAR},
     pay_time = #{payTime,jdbcType=TIMESTAMP},
     ship_sn = #{shipSn,jdbcType=VARCHAR},

@@ -13,10 +13,10 @@ import java.util.Date;
 @Data
 public class QueryOrderVO {
     @ApiModelProperty(value = "当前页")
-    private int page = 1;
+    private int currentPage = 1;
 
     @ApiModelProperty(value = "页面容量")
-    private int size = 10;
+    private int pageSize = 10;
 
     @ApiModelProperty(value = "员工账号id")
     private int empId;

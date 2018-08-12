@@ -1,13 +1,17 @@
 package org.linlinjava.litemall.db.chao.service.impl;
 
+import org.apache.http.client.utils.DateUtils;
 import org.linlinjava.litemall.core.util.bcrypt.BCryptPasswordEncoder;
 import org.linlinjava.litemall.db.chao.domain.Employee;
 import org.linlinjava.litemall.db.chao.service.IEmployeeService;
+import org.linlinjava.litemall.db.chao.service.IOrderService;
+import org.linlinjava.litemall.db.chao.utils.DateUtil;
 import org.linlinjava.litemall.db.dao.EmployeeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by machao on 2018/8/10.
@@ -17,6 +21,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Autowired
     private EmployeeMapper employeeMapper;
+    @Autowired
+    private IOrderService orderService;
 
     /**
      * 通过用户名和密码进行登录
@@ -119,5 +125,18 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Override
     public int updateEmployee(Employee employee) {
         return employeeMapper.updateByPrimaryKey(employee);
+    }
+
+    @Override
+    public Map<String, Object> queryIncomeByEmpIdAndDate(int empId, Date beginDate, Date endDate) {
+        Map<String, Object> map = orderService.queryIncomeByEmpIdAndDate(empId, beginDate, endDate);
+        Date date = new Date();
+        Map<String, Object> monthlyIncomeMap = orderService.queryIncomeByEmpIdAndDate(
+                empId, DateUtil.getBeginMonthTime(date,0), DateUtil.getEndMonthTime(date,0));
+        map.put("monthlyIncome",monthlyIncomeMap.get("amountDelivery"));
+        Map<String, Object> lastMonthIncomeMap = orderService.queryIncomeByEmpIdAndDate(
+                empId, DateUtil.getBeginMonthTime(date,1), DateUtil.getEndMonthTime(date,1));
+        map.put("lastMonthIncome",lastMonthIncomeMap.get("amountDelivery"));
+        return map;
     }
 }

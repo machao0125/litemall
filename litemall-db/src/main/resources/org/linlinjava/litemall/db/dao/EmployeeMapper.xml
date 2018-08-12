@@ -23,7 +23,12 @@
   </resultMap>
 
   <sql id="baseColumn">
-    id,account,email,name,mobile,createTime,enable,lastPasswordResetDate
+      id,username, gender,password,
+      birthday, last_login_time, last_login_ip,
+      user_level, nickname, mobile,
+      avatar, weixin_openid, status,
+      add_time, deleted, return_money,
+      integration, mall_id
   </sql>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -74,9 +79,7 @@
   </select>
 
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, username, password, gender, birthday, last_login_time, last_login_ip, 
-    user_level, nickname, mobile, avatar, weixin_openid, status, add_time, deleted, return_money, 
-    integration, mall_id
+    select <include refid="baseColumn"/>
     from `employee`
   </select>
 
@@ -89,7 +92,7 @@
   <select id="selectByMobile" resultMap="BaseResultMap" parameterType="java.lang.String">
     select <include refid="baseColumn"/>
     from `employee`
-    WHERE username = #{username}
+    WHERE mobile = #{mobile}
   </select>
 
   <update id="updatePasswordByMobile" parameterType="java.lang.String">

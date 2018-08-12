@@ -32,34 +32,13 @@ public class AuthController {
     private IEmployeeService employeeService;
 
 
-    /**
-     * 员工账号登录
-     *
-     * @param body 请求内容，{ username: xxx, password: xxx }
-     * @param request 请求对象
-     * @return 登录结果
-     *   成功则
-     *  {
-     *      errno: 0,
-     *      errmsg: '成功',
-     *      data:
-     *          {
-     *              token: xxx,
-     *              tokenExpire: xxx,
-     *              employee: xxx
-     *          }
-     *  }
-     *   失败则 { errno: XXX, errmsg: XXX }
-     */
     @ApiOperation(value="员工登录")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "username", paramType = "query" ,required = true, dataType = "String"),
-            @ApiImplicitParam(name = "password", paramType = "query" ,required = true, dataType = "String")
+            @ApiImplicitParam(name = "username" ,required = true, dataType = "String"),
+            @ApiImplicitParam(name = "password" ,required = true, dataType = "String")
     })
     @RequestMapping(value = "login",method = RequestMethod.POST)
-    public Object login(@RequestBody String body, HttpServletRequest request) {
-        String username = JacksonUtil.parseString(body, "username");
-        String password = JacksonUtil.parseString(body, "password");
+    public Object login(String username,String password,HttpServletRequest request) {
         if(username == null || password == null){
             return ResponseUtil.badArgument();
         }
@@ -80,38 +59,13 @@ public class AuthController {
 
         Map<Object, Object> result = new HashMap<Object, Object>();
         result.put("token", userToken.getToken());
-        result.put("tokenExpire", userToken.getExpireTime().toString());
+        result.put("tokenExpire", userToken.getExpireTime());
         result.put("employee", login);
         return ResponseUtil.ok(result);
     }
 
 
-    /**
-     * 账号注册
-     *
-     * @param body 请求内容
-     *  {
-     *      username: xxx,
-     *      password: xxx,
-     *      mobile: xxx
-     *      code: xxx
-     *  }
-     *  其中code是手机验证码，目前还不支持手机短信验证码
-     * @param request 请求对象
-     * @return 登录结果
-     *   成功则
-     *  {
-     *      errno: 0,
-     *      errmsg: '成功',
-     *      data:
-     *          {
-     *              token: xxx,
-     *              tokenExpire: xxx,
-     *              userInfo: xxx
-     *          }
-     *  }
-     *   失败则 { errno: XXX, errmsg: XXX }
-     */
+
     @ApiOperation(value="员工注册")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "username", value = "账号", paramType = "query" , required = true, dataType = "String"),
@@ -120,11 +74,7 @@ public class AuthController {
             @ApiImplicitParam(name = "code", value = "验证码", paramType = "query" , required = true, dataType = "String")
     })
     @RequestMapping(value = "register" , method = RequestMethod.POST)
-    public Object register(@RequestBody String body, HttpServletRequest request) {
-        String username = JacksonUtil.parseString(body, "username");
-        String password = JacksonUtil.parseString(body, "password");
-        String mobile = JacksonUtil.parseString(body, "mobile");
-        String code = JacksonUtil.parseString(body, "code");
+    public Object register( String username,String password,String mobile,String code,HttpServletRequest request) {
 
         if(username == null || password == null || mobile == null || code == null){
             return ResponseUtil.badArgument();
@@ -172,21 +122,6 @@ public class AuthController {
         return ResponseUtil.ok(result);
     }
 
-    /**
-     * 账号密码重置
-     *
-     * @param body 请求内容
-     *  {
-     *      password: xxx,
-     *      mobile: xxx
-     *      code: xxx
-     *  }
-     *  其中code是手机验证码，目前还不支持手机短信验证码
-     * @param request 请求对象
-     * @return 登录结果
-     *   成功则 { errno: 0, errmsg: '成功' }
-     *   失败则 { errno: XXX, errmsg: XXX }
-     */
     @ApiOperation(value="员工重置密码")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "password",  paramType = "query" ,required = true, dataType = "String"),
@@ -194,10 +129,7 @@ public class AuthController {
             @ApiImplicitParam(name = "code", paramType = "query" , required = true, dataType = "String")
     })
     @PostMapping("resetPassword")
-    public Object reset(@RequestBody String body, HttpServletRequest request) {
-        String password = JacksonUtil.parseString(body, "password");
-        String mobile = JacksonUtil.parseString(body, "mobile");
-        String code = JacksonUtil.parseString(body, "code");
+    public Object reset(String password, String mobile,String code) {
 
         if(mobile == null || code == null || password == null){
             return ResponseUtil.badArgument();
