@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.linlinjava.litemall.core.util.JacksonUtil;
 import org.linlinjava.litemall.core.util.ResponseUtil;
 import org.linlinjava.litemall.db.chao.domain.Employee;
 import org.linlinjava.litemall.db.chao.service.IEmployeeService;
@@ -33,9 +34,10 @@ public class EmployeeController {
     private IEmployeeService employeeService;
 
     @ApiOperation(value = "获取员工信息")
-    @ApiImplicitParam(name = "empId", value = "员工id", required = true, dataType = "int")
+    @ApiImplicitParam(name = "body", value = "{\"empId\":1}",paramType = "body",required = true)
     @PostMapping("getEmployee")
-    public Object getEmployee(Integer empId) {
+    public Object getEmployee(@RequestBody String body) {
+        Integer empId = JacksonUtil.parseInteger(body, "empId");
         //1、判断入参不为空
         if (empId == null) {
             return ResponseUtil.badArgument();
@@ -58,27 +60,15 @@ public class EmployeeController {
 
 
     @ApiOperation(value = "查询员工收入")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "empId", value = "员工",paramType = "query", required = true, dataType = "int"),
-        @ApiImplicitParam(name = "beginDate", value = "开始时间",paramType = "query", required = true, dataType = "String"),
-        @ApiImplicitParam(name = "endDate", value = "截止时间",paramType = "query", required = true, dataType = "String")
-    })
+    @ApiImplicitParam(name = "vo", value = "{\"empId\":1,\"beginDate\":\"2018-08-10 09:41:37\",\"endDate\":\"2018-08-14 09:41:37\"}", required = true, dataType = "QueryOrderVO")
     @PostMapping("queryIncome")
-    public Object queryIncome(int empId, String beginDate, String endDate) {
+    public Object queryIncome(@RequestBody QueryOrderVO vo) {
         //1、判断入参不为空
-        if (empId == 0) {
+        if (vo == null) {
             return ResponseUtil.badArgument();
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//yyyy-mm-dd, 会出现时间不对, 因为小写的mm是代表: 秒
-        Date begin = null;
-        Date end = null;
-        try {
-            begin = sdf.parse(beginDate);
-            end = sdf.parse(endDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Map<String, Object> map = employeeService.queryIncomeByEmpIdAndDate(empId, begin, end);
+
+        Map<String, Object> map = employeeService.queryIncomeByEmpIdAndDate(vo.getEmpId(), vo.getBeginDate(),vo.getEndDate());
         return ResponseUtil.ok(map);
     }
 }
